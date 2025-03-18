@@ -1,7 +1,7 @@
 import React,{useState} from 'react'
 
 const Geolocation = () => {
-    const [location, setLocation] = useState(null);
+    const [data, setData] = useState(null);
     const [error, setError] = useState(null);
     const [watchId,setWatchId] = useState(null);
 
@@ -13,14 +13,20 @@ const Geolocation = () => {
         if (navigator.geolocation) {
             const watchId = navigator.geolocation.watchPosition(
                 (position) => {
-                  setLocation({
+                  setData({
                     latitude: position.coords.latitude,
                     longitude: position.coords.longitude,
+                    accuracy: position.coords.accuracy,
+                    altitude: position.coords.altitude,
+                    altitudeAccuracy : position.coords.altitudeAccuracy,
+                    heading: position.coords.heading,
+                    speed: position.coords.speed,
                   });
                 },
                 (error) => {
                   setError(error.message);
-                }
+                },
+                { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
               );
               
             setWatchId(watchId)
@@ -36,11 +42,18 @@ const Geolocation = () => {
         if(navigator.geolocation){
             navigator.geolocation.getCurrentPosition(
                 (position) => {
-                  console.log("Latitude:", position.coords.latitude);
-                  console.log("Longitude:", position.coords.longitude);
+                    setData({
+                        latitude: position.coords.latitude,
+                        longitude: position.coords.longitude,
+                        accuracy: position.coords.accuracy,
+                        altitude: position.coords.altitude,
+                        altitudeAccuracy : position.coords.altitudeAccuracy,
+                        heading: position.coords.heading,
+                        speed: position.coords.speed,
+                      });
                 },
                 (error) => {
-                  console.error("Error getting location:", error.message);
+                    setError(error.message);
                 },
                 { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
             );
@@ -55,7 +68,7 @@ const Geolocation = () => {
         <button onClick={askWatchPermission}>Ask Watch Permission</button>
         <button onClick={askCurrentPermission}>Ask Current Permission</button>
 
-        {location ? <p>Latitude: {location.latitude}, Longitude:{location.longitude}</p>:error?<p>Error: {error}</p> : <p>Ask for Location</p>}
+        {data ? <div>Latitude: {data.latitude}<br/>Longitude:{data.longitude}<br/> Accuracy:{data.accuracy} <br/>Altitude:{data.altitude}<br/>Altitude Accuracy: {data.altitudeAccuracy}<br/>Heading:{data.heading}<br/>Speed:{data.speed} </div>:error?<p>Error: {error}</p> : <p>Ask for Location</p>}
     </div>
   )
 }

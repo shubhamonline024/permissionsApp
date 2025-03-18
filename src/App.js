@@ -1,10 +1,10 @@
 import React from 'react'
-import GeolocationApp from './GeolocationApp'
+import Geolocation from './Geolocation'
 
 const App = () => {
   return (
     <div>
-      <GeolocationApp/>
+      <Geolocation/>
     </div>
   )
 }

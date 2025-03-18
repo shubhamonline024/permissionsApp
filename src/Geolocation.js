@@ -21,6 +21,7 @@ const Geolocation = () => {
                     altitudeAccuracy : position.coords.altitudeAccuracy,
                     heading: position.coords.heading,
                     speed: position.coords.speed,
+                    type:"Watch Position"
                   });
                 },
                 (error) => {
@@ -50,6 +51,7 @@ const Geolocation = () => {
                         altitudeAccuracy : position.coords.altitudeAccuracy,
                         heading: position.coords.heading,
                         speed: position.coords.speed,
+                        type:"Current Position"
                       });
                 },
                 (error) => {
@@ -68,7 +70,7 @@ const Geolocation = () => {
         <button onClick={askWatchPermission}>Ask Watch Permission</button>
         <button onClick={askCurrentPermission}>Ask Current Permission</button>
 
-        {data ? <div>Latitude: {data.latitude}<br/>Longitude:{data.longitude}<br/> Accuracy:{data.accuracy} <br/>Altitude:{data.altitude}<br/>Altitude Accuracy: {data.altitudeAccuracy}<br/>Heading:{data.heading}<br/>Speed:{data.speed} </div>:error?<p>Error: {error}</p> : <p>Ask for Location</p>}
+        {data ? <div>Latitude: {data.latitude}<br/>Longitude: {data.longitude}<br/> Accuracy: {data.accuracy} meters<br/>Altitude: {data.altitude}<br/>Altitude Accuracy: {data.altitudeAccuracy} meters<br/>Heading: {data.heading} degrees<br/>Speed: {data.speed} m/s<br/>Type: {data.type} </div>:error?<p>Error: {error}</p> : <p>Ask for Location</p>}
     </div>
   )
 }
